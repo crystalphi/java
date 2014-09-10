@@ -13,9 +13,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WordCount {
 
+  private static final Logger logger = LoggerFactory.getLogger(WordCount.class);
+  
   public static class TokenizerMapper 
        extends Mapper<Object, Text, Text, IntWritable>{
     
@@ -55,6 +59,7 @@ public class WordCount {
       System.err.println("Usage: wordcount <in> <out>");
       System.exit(2);
     }
+    logger.info("now {}" , "starting server");  
     Job job = new Job(conf, "word count");
     job.setJarByClass(WordCount.class);
     job.setMapperClass(TokenizerMapper.class);
